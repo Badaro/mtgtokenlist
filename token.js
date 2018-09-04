@@ -2,7 +2,7 @@ var tokenSource = "https://raw.githubusercontent.com/Cockatrice/Magic-Token/mast
 var tokensLoaded = false;
 var tokens = {};
 
-var transformSource = "https://api.scryfall.com/cards/search?order=cmc&q=is%3Atransform";
+var transformSource = "https://api.scryfall.com/cards/search?order=cmc&q=is%3Aflip+or+is%3Atransform";
 var transformLoaded = false;
 var transform = {};
 
