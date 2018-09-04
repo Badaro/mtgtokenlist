@@ -92,7 +92,12 @@ function loadTokens(callback)
 					}
 					if(nodeName=="text")
 					{
-						token.description = cards[i].childNodes[j].textContent;
+						var cleanDescription = cards[i].childNodes[j].textContent;
+
+						cleanDescription = cleanDescription.replace(/\)$/gm, "");
+						cleanDescription = cleanDescription.replace(/^\(/gm, "");
+						
+						token.description = cleanDescription;
 					}
 					if(nodeName=="pt")
 					{
