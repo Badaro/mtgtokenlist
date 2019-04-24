@@ -60,36 +60,49 @@ function loadTokens(callback)
 						
 						token.name = cleanName;
 					}
-					if(nodeName=="color")
+					if(nodeName=="prop")
 					{
-						if(cards[i].childNodes[j].textContent.match(/W/gm))
+						for(var k=0;k<cards[i].childNodes[j].childNodes.length;k++)
 						{
-							if(token.color!="") token.color = token.color + "/";
-							token.color = token.color + "White";
+							var propNodeName = cards[i].childNodes[j].childNodes[k].localName;
+						
+							if(propNodeName=="colors")
+							{
+								if(cards[i].childNodes[j].childNodes[k].textContent.match(/W/gm))
+								{
+									if(token.color!="") token.color = token.color + "/";
+									token.color = token.color + "White";
+								}
+								if(cards[i].childNodes[j].childNodes[k].textContent.match(/U/gm))
+								{
+									if(token.color!="") token.color = token.color + "/";
+									token.color = token.color + "Blue";
+								}
+								if(cards[i].childNodes[j].childNodes[k].textContent.match(/B/gm))
+								{
+									if(token.color!="") token.color = token.color + "/";
+									token.color = token.color + "Black";
+								}
+								if(cards[i].childNodes[j].childNodes[k].textContent.match(/R/gm))
+								{
+									if(token.color!="") token.color = token.color + "/";
+									token.color = token.color + "Red";
+								}
+								if(cards[i].childNodes[j].childNodes[k].textContent.match(/G/gm))
+								{
+									if(token.color!="") token.color = token.color + "/";
+									token.color = token.color + "Green";
+								}
+								if(token.color=="") token.color = "Colorless";
+								token.color = token.color;
+							}
+							if(propNodeName=="pt")
+							{
+								token.pt = cards[i].childNodes[j].childNodes[k].textContent;
+							}
 						}
-						if(cards[i].childNodes[j].textContent.match(/U/gm))
-						{
-							if(token.color!="") token.color = token.color + "/";
-							token.color = token.color + "Blue";
-						}
-						if(cards[i].childNodes[j].textContent.match(/B/gm))
-						{
-							if(token.color!="") token.color = token.color + "/";
-							token.color = token.color + "Black";
-						}
-						if(cards[i].childNodes[j].textContent.match(/R/gm))
-						{
-							if(token.color!="") token.color = token.color + "/";
-							token.color = token.color + "Red";
-						}
-						if(cards[i].childNodes[j].textContent.match(/G/gm))
-						{
-							if(token.color!="") token.color = token.color + "/";
-							token.color = token.color + "Green";
-						}
-						if(token.color=="") token.color = "Colorless";
-						token.color = token.color;
 					}
+
 					if(nodeName=="text")
 					{
 						var cleanDescription = cards[i].childNodes[j].textContent;
@@ -99,10 +112,7 @@ function loadTokens(callback)
 						
 						token.description = cleanDescription;
 					}
-					if(nodeName=="pt")
-					{
-						token.pt = cards[i].childNodes[j].textContent;
-					}
+
 					if(nodeName=="reverse-related")
 					{
 						token.cards.push(cards[i].childNodes[j].textContent);
