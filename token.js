@@ -109,6 +109,8 @@ function loadTokens(callback)
 
 						cleanDescription = cleanDescription.replace(/\)$/gm, "");
 						cleanDescription = cleanDescription.replace(/^\(/gm, "");
+						cleanDescription = cleanDescription.replace(/\r/gm, "");
+						cleanDescription = cleanDescription.replace(/\n/gm, " ");
 						
 						token.description = cleanDescription;
 					}
