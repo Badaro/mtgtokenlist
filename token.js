@@ -203,6 +203,12 @@ function generateTokens()
 	var lines = input.match(/[^\r\n]+/g);
 	var validLines = [];
 
+    if(lines==null)
+    {
+		$("#output").val("Card list is empty");
+ 		return;	
+	}
+
 	for(var i=0;i<lines.length;i++)
 	{
 		if(isValidLine(lines[i]))
@@ -222,8 +228,16 @@ function generateTokens()
 				output.push(tokens[validLines[i]][j]);
 			}
 		}
-	}	
+	}
 	
 	var output = Array.from(new Set(output)); // Filter unique items
-	$("#output").val(output.join("\n"));
+	
+	if(output.length==0)
+	{
+		$("#output").val("No tokens found for the specified card list");
+	}
+	else
+	{
+		$("#output").val(output.join("\n"));
+	}
 }
