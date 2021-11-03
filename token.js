@@ -2,7 +2,7 @@ var tokenSource = "https://raw.githubusercontent.com/Cockatrice/Magic-Token/mast
 var tokensLoaded = false;
 var tokens = {};
 
-var transformSource = "https://api.scryfall.com/cards/search?order=cmc&q=is%3Aflip+or+is%3Atransform+or+is%3Aadventure";
+var transformSource = "https://api.scryfall.com/cards/search?order=cmc&q=is%3Aflip+or+is%3Adfc+or+is%3Aadventure";
 var transformLoaded = false;
 var transform = {};
 
@@ -155,7 +155,7 @@ function loadTokens(callback)
 	}
 }
 
-function loadTransform(callback)
+function loadTransform(url, callback)
 {
 	console.log("LoadTransform called");
 	
@@ -164,15 +164,22 @@ function loadTransform(callback)
 		callback();
 	}		
 	else
-	{	$.get(transformSource, null, function(data)
+	{	$.get(url, null, function(data)
 		{
 			for(var i=0;i<data.data.length;i++)
 			{
 				transform[data.data[i].card_faces[0].name] = data.data[i].card_faces[1].name;
 			}
 			
-			transformLoaded = true;
-			callback();
+			if(data.has_more)
+			{
+				loadTransform(data.next_page, callback);
+			}
+			else
+			{
+				transformLoaded = true;
+				callback();
+			}
 		});
 	}
 }
@@ -183,7 +190,7 @@ function generate()
 	
 	loadTokens(function()
 	{
-		loadTransform(generateTokens);
+		loadTransform(transformSource, generateTokens);
 	});
 }
 
